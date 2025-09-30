@@ -146,7 +146,7 @@ void merge(int A[], int l, int m, int r) {
     for (int j = 0; j < n2; j++) // gemizei o dexios pinakas
         R[j] = A[m + 1 + j];
 
-    int i = 0, j = 0, k = 0;
+    int i = 0, j = 0, k = l;
 
     while (i < n1 && j < n2) { // ayth h epanalipsi kanei th
                                // synenosi me taxinomisi
