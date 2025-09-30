@@ -30,8 +30,8 @@ help:
 	@echo "  clean  - Clean all lessons"
 	@echo "  help   - Show this help message"
 	@echo ""
-	@echo "To compile a specific lesson: make lessons/lesson01-getting-started"
-	@echo "To clean a specific lesson: make -C lessons/lesson01-getting-started clean"
+	@echo "To compile a specific lesson: make lessons/lesson01-Sorting"
+	@echo "To clean a specific lesson: make -C lessons/lesson01-Sorting clean"
 
 # Show lesson list
 lessons:
