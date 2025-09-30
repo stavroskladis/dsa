@@ -3,7 +3,7 @@
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra
+CXXFLAGS = -std=c++23 -Wall -Wextra
 
 # Get all lesson directories
 LESSONS = $(wildcard lessons/lesson*)
