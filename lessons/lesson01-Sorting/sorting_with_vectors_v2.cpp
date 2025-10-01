@@ -2,6 +2,8 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 // Function declarations with time complexity annotations
@@ -12,6 +14,10 @@ void insertion_sort(vector<int>& A);             // O(n^2)
 void selection_sort(vector<int>& A);             // O(n^2)
 void merge(vector<int>& A, int l, int m, int r); // O(n)
 void merge_sort(vector<int>& A, int l, int r);   // O(n log n)
+void quick_sort(vector<int>& A, int low, int high); // O(n log n) average, O(n^2) worst
+int partition(vector<int>& A, int low, int high);   // O(n)
+
+/* std::sort: O(n log n) - highly optimized, uses introsort */
 
 int main() 
 {
@@ -50,6 +56,17 @@ int main()
     cout << "\nSorted by Merge Sort (ascending)\n";
     print_vector(v4);
 
+    auto v5 = arr;
+    quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
+
+    cout << "\nSorted by Quick Sort (ascending)\n";
+    print_vector(v5);
+
+    auto v6 = arr;
+    sort(v6.begin(), v6.end());
+    cout << "\nSorted by std::sort (ascending)\n";
+    print_vector(v6);
+
     return 0;
 }
 
@@ -86,20 +103,18 @@ void print_vector(const vector<int>& A)
  */
 void bubble_sort(vector<int>& A)
 {
-    int n = static_cast<int>(A.size()); // Convert size_t to int to avoid warnings
+    int n = static_cast<int>(A.size());
     
-    bool swapped;
-
-    for (int b = 1; b < n; b++) {
-        swapped = false;
-
-        for (int i = 0; i < n - b; ++i) {
-            if (A[i] > A[i + 1]) {
-                swap(A[i], A[i + 1]); // Use built-in swap function
+    for (int i = 0; i < n - 1; ++i) {
+        bool swapped = false;
+        
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (A[j] > A[j + 1]) {
+                swap(A[j], A[j + 1]);
                 swapped = true;
             }
         }
-
+        
         if (!swapped) {
             break; // Array is already sorted
         }
@@ -217,4 +232,39 @@ void merge(vector<int>& A, int left, int m, int right)
     while (j < n2) {
         A[k++] = R[j++];
     }
+}
+
+/**
+ * Quick Sort Algorithm - O(n log n) average, O(n^2) worst case
+ * Picks a pivot element and partitions the array around the pivot,
+ * then recursively sorts the sub-arrays.
+ */
+void quick_sort(vector<int>& A, int low, int high)
+{
+    if (low < high) {
+        int pivot_index = partition(A, low, high);
+        quick_sort(A, low, pivot_index - 1);  // Sort left subarray
+        quick_sort(A, pivot_index + 1, high); // Sort right subarray
+    }
+}
+
+/**
+ * Partition function for Quick Sort - O(n) time complexity
+ * Partitions the array around a pivot element and returns the pivot's final position.
+ * Uses Lomuto partition scheme.
+ */
+int partition(vector<int>& A, int low, int high)
+{
+    int pivot = A[high]; // Choose last element as pivot
+    int i = low - 1;     // Index of smaller element
+    
+    for (int j = low; j < high; ++j) {
+        if (A[j] <= pivot) {
+            ++i;
+            swap(A[i], A[j]);
+        }
+    }
+    
+    swap(A[i + 1], A[high]);
+    return i + 1;
 }
