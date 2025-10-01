@@ -36,35 +36,35 @@ int main()
     auto v1 = arr; // Changes to v1 don't affect arr
 
     bubble_sort(v1);
-    cout << "\nSorted by Bubble Sort (ascending)\n";
+    cout << endl << "Sorted by Bubble Sort (ascending)" << endl;
     print_vector(v1);
 
     auto v2 = arr;
     insertion_sort(v2);
-    cout << "\nSorted by Insertion Sort (ascending)\n";
+    cout << endl << "Sorted by Insertion Sort (ascending)" << endl;
     print_vector(v2);
 
     auto v3 = arr;
     selection_sort(v3);
-    cout << "\nSorted by Selection Sort (ascending)\n";
+    cout << endl << "Sorted by Selection Sort (ascending)" << endl;
     print_vector(v3);
 
     auto v4 = arr;
     // merge_sort arguments: vector v4, start index, end index
     merge_sort(v4, 0, static_cast<int>(v4.size()) - 1);
 
-    cout << "\nSorted by Merge Sort (ascending)\n";
+    cout << endl << "Sorted by Merge Sort (ascending)" << endl;
     print_vector(v4);
 
     auto v5 = arr;
     quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
 
-    cout << "\nSorted by Quick Sort (ascending)\n";
+    cout << endl << "Sorted by Quick Sort (ascending)" << endl;
     print_vector(v5);
 
     auto v6 = arr;
     sort(v6.begin(), v6.end());
-    cout << "\nSorted by std::sort (ascending)\n";
+    cout << endl << "Sorted by std::sort (ascending)" << endl;
     print_vector(v6);
 
     return 0;
