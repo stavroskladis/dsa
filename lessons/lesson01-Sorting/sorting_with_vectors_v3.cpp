@@ -18,10 +18,14 @@ void bubble_sort(vector<T>& A, Compare comp); // O(n^2)
 template <typename T>
 void bubble_sort(vector<T>& A);
 
-template <typename T>
-void selection_sort(vector<T>& A); // O(n^2)
+template <typename T, typename Compare>
+void selection_sort(vector<T>& A, Compare comp); // O(n^2)
 
-void insertion_sort(vector<int>& A);             // O(n^2)
+template <typename T>
+void selection_sort(vector<T>& A);
+
+void insertion_sort(vector<int>& A); // O(n^2)
+
 void merge(vector<int>& A, int l, int m, int r); // O(n)
 void merge_sort(vector<int>& A, int l, int r);   // O(n log n)
 void quick_sort(vector<int>& A, int low,
@@ -159,8 +163,8 @@ void bubble_sort(vector<T>& A) {
  * Finds the minimum element in the unsorted portion and swaps
  * it with the first element of the unsorted portion.
  */
-template <typename T>
-void selection_sort(vector<T>& A) {
+template <typename T, typename Compare>
+void selection_sort(vector<T>& A, Compare comp) {
     size_t n = A.size();
     if (n <= 1) {
         return;
@@ -168,23 +172,34 @@ void selection_sort(vector<T>& A) {
 
     for (size_t i = 0; i < n - 1; ++i) {
         // Assume the first unsorted element is the minimum
-        size_t min_idx = i;
+        size_t idx = i;
 
         // Find minimum element in remaining unsorted array
         for (size_t j = i + 1; j < n; ++j) {
 
-            // Update if a smaller element is found
-            if (A[j] < A[min_idx]) {
-                min_idx = j;
+            // For ascending order, use std::less<T>
+            // For descending order, use std::greater<T>
+            if (comp(A[j], A[idx])) {
+                idx = j;
             }
         }
 
         // Swap the smallest element with
         // the first element of the unsorted part
-        if (min_idx != i) {
-            swap(A[i], A[min_idx]);
+        if (idx != i) {
+            swap(A[i], A[idx]);
         }
     }
+}
+
+/**
+ * Selection Sort Algorithm (default ascending) - O(n^2) time
+ * complexity Uses std::less<T> comparator for ascending sort by
+ * default
+ */
+template <typename T>
+void selection_sort(vector<T>& A) {
+    selection_sort(A, std::less<T>());
 }
 
 /**
