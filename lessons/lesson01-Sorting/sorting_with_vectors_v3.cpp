@@ -18,8 +18,10 @@ void bubble_sort(vector<T>& A, Compare comp); // O(n^2)
 template <typename T>
 void bubble_sort(vector<T>& A);
 
+template <typename T>
+void selection_sort(vector<T>& A); // O(n^2)
+
 void insertion_sort(vector<int>& A);             // O(n^2)
-void selection_sort(vector<int>& A);             // O(n^2)
 void merge(vector<int>& A, int l, int m, int r); // O(n)
 void merge_sort(vector<int>& A, int l, int r);   // O(n log n)
 void quick_sort(vector<int>& A, int low,
@@ -153,6 +155,39 @@ void bubble_sort(vector<T>& A) {
 }
 
 /**
+ * Selection Sort Algorithm - O(n^2) time complexity
+ * Finds the minimum element in the unsorted portion and swaps
+ * it with the first element of the unsorted portion.
+ */
+template <typename T>
+void selection_sort(vector<T>& A) {
+    size_t n = A.size();
+    if (n <= 1) {
+        return;
+    }
+
+    for (size_t i = 0; i < n - 1; ++i) {
+        // Assume the first unsorted element is the minimum
+        size_t min_idx = i;
+
+        // Find minimum element in remaining unsorted array
+        for (size_t j = i + 1; j < n; ++j) {
+
+            // Update if a smaller element is found
+            if (A[j] < A[min_idx]) {
+                min_idx = j;
+            }
+        }
+
+        // Swap the smallest element with
+        // the first element of the unsorted part
+        if (min_idx != i) {
+            swap(A[i], A[min_idx]);
+        }
+    }
+}
+
+/**
  * Insertion Sort Algorithm - O(n^2) time complexity
  * Builds the final sorted array one item at a time by taking
  * elements from the unsorted portion and inserting them into
@@ -172,31 +207,6 @@ void insertion_sort(vector<int>& A) {
         }
 
         A[j + 1] = key; // Insert key at correct position
-    }
-}
-
-/**
- * Selection Sort Algorithm - O(n^2) time complexity
- * Finds the minimum element in the unsorted portion and swaps
- * it with the first element of the unsorted portion.
- */
-void selection_sort(vector<int>& A) {
-    int n = static_cast<int>(A.size());
-
-    for (int i = 0; i < n - 1; ++i) {
-        int min_idx = i; // Index of minimum element
-
-        // Find minimum element in remaining array
-        for (int j = i + 1; j < n; ++j) {
-            if (A[j] < A[min_idx]) {
-                min_idx = j;
-            }
-        }
-
-        // Swap if minimum element is not at current position
-        if (min_idx != i) {
-            swap(A[i], A[min_idx]);
-        }
     }
 }
 
