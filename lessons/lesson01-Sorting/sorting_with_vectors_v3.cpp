@@ -216,22 +216,23 @@ void selection_sort(vector<T>& A) {
  */
 template <typename T, typename Compare>
 void insertion_sort(vector<T>& A, Compare comp) {
-    // In this case use integer for the size n and the counters
-    // of the loops. If we use size_t type for the index j, it
-    // will underflow to SIZE_MAX.
+    // Usage of size_t for index j, would result in underflow
     int n = static_cast<int>(A.size());
 
-    for (int i = 1; i < n; ++i) { // Start from second element
-        T key = A[i];             // Element to be inserted
+    // Assume the first element is sorted
+    for (int i = 1; i < n; ++i) {
+        // the key to be inserted will always be the first
+        // element of the unsorted portion
+        T key = A[i];
         int j = i - 1;
 
-        // Shift elements greater than key to the right
         while (j >= 0 && comp(key, A[j])) {
+            // Shift element rightward
             A[j + 1] = A[j];
-            j--;
+            --j;
         }
 
-        A[j + 1] = key; // Insert key at correct position
+        A[j + 1] = key; // Insert the key at correct position
     }
 }
 
