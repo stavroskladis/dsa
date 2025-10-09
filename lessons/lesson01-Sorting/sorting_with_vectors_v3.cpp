@@ -24,12 +24,18 @@ void selection_sort(vector<T>& A, Compare comp); // O(n^2)
 template <typename T>
 void selection_sort(vector<T>& A);
 
-void insertion_sort(vector<int>& A); // O(n^2)
+template <typename T, typename Compare>
+void insertion_sort(vector<T>& A, Compare comp); // O(n^2)
+
+template <typename T>
+void insertion_sort(vector<T>& A);
 
 void merge(vector<int>& A, int l, int m, int r); // O(n)
 void merge_sort(vector<int>& A, int l, int r);   // O(n log n)
-void quick_sort(vector<int>& A, int low,
-                int high); // O(n log n) average, O(n^2) worst
+
+// O(n log n) average, O(n^2) worst
+void quick_sort(vector<int>& A, int low, int high);
+
 int partition(vector<int>& A, int low, int high); // O(n)
 
 /* std::sort: O(n log n) - highly optimized, uses introsort */
@@ -208,21 +214,30 @@ void selection_sort(vector<T>& A) {
  * elements from the unsorted portion and inserting them into
  * their correct position.
  */
-void insertion_sort(vector<int>& A) {
+template <typename T, typename Compare>
+void insertion_sort(vector<T>& A, Compare comp) {
+    // In this case use integer for the size n and the counters
+    // of the loops. If we use size_t type for the index j, it
+    // will underflow to SIZE_MAX.
     int n = static_cast<int>(A.size());
 
     for (int i = 1; i < n; ++i) { // Start from second element
-        int key = A[i];           // Element to be inserted
+        T key = A[i];             // Element to be inserted
         int j = i - 1;
 
         // Shift elements greater than key to the right
-        while (j >= 0 && A[j] > key) {
+        while (j >= 0 && comp(key, A[j])) {
             A[j + 1] = A[j];
             j--;
         }
 
         A[j + 1] = key; // Insert key at correct position
     }
+}
+
+template <typename T>
+void insertion_sort(vector<T>& A) {
+    insertion_sort(A, std::less<T>());
 }
 
 /**
