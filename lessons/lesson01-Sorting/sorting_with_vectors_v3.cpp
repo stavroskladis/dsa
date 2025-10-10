@@ -6,37 +6,40 @@
 
 using namespace std;
 
-// Function declarations with time complexity annotations
 void read_vector(vector<int>& A, int n);
 
 template <typename T>
 void print_vector(const vector<T>& A);
 
 template <typename T, typename Compare>
-void bubble_sort(vector<T>& A, Compare comp); // O(n^2)
+void bubble_sort(vector<T>& A, Compare comp);
 
 template <typename T>
 void bubble_sort(vector<T>& A);
 
 template <typename T, typename Compare>
-void selection_sort(vector<T>& A, Compare comp); // O(n^2)
+void selection_sort(vector<T>& A, Compare comp);
 
 template <typename T>
 void selection_sort(vector<T>& A);
 
 template <typename T, typename Compare>
-void insertion_sort(vector<T>& A, Compare comp); // O(n^2)
+void insertion_sort(vector<T>& A, Compare comp);
 
 template <typename T>
 void insertion_sort(vector<T>& A);
 
-void merge(vector<int>& A, int l, int m, int r); // O(n)
-void merge_sort(vector<int>& A, int l, int r);   // O(n log n)
+template <typename T>
+void merge(vector<T>& A, int l, int m, int r);
 
-// O(n log n) average, O(n^2) worst
-void quick_sort(vector<int>& A, int low, int high);
+template <typename T>
+void merge_sort(vector<T>& A, int l, int r);
 
-int partition(vector<int>& A, int low, int high); // O(n)
+template <typename T>
+void quick_sort(vector<T>& A, int low, int high);
+
+template <typename T>
+int partition(vector<T>& A, int low, int high);
 
 /* std::sort: O(n log n) - highly optimized, uses introsort */
 
@@ -45,31 +48,26 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     const int n = 5;
-    vector<int> arr; // Vector starts with size 0
+    vector<int> arr;
 
     read_vector(arr, n);
 
     cout << "Initial array" << endl;
     print_vector<int>(arr);
 
-    // Create copies so each algorithm works on the same
-    // unsorted vector
-    auto v1 = arr; // Changes to v1 don't affect arr
-
+    auto v1 = arr;
     bubble_sort(v1);
     cout << endl << "Sorted by Bubble Sort (ascending)" << endl;
     print_vector<int>(v1);
 
     auto v2 = arr;
     insertion_sort(v2);
-    cout << endl
-         << "Sorted by Insertion Sort (ascending)" << endl;
+    cout << endl << "Sorted by Insertion Sort (ascending)" << endl;
     print_vector<int>(v2);
 
     auto v3 = arr;
     selection_sort(v3);
-    cout << endl
-         << "Sorted by Selection Sort (ascending)" << endl;
+    cout << endl << "Sorted by Selection Sort (ascending)" << endl;
     print_vector<int>(v3);
 
     auto v4 = arr;
@@ -103,8 +101,8 @@ void read_vector(vector<int>& A, int n) {
     A.resize(n); // Resize vector to exactly n elements
 
     for (int i = 0; i < n; ++i) {
-        A[i] = rand() % 10 +
-               1; // Generate random numbers from 1 to 10
+        // Generate random numbers from 1 to 10
+        A[i] = rand() % 10 + 1;
     }
 }
 
@@ -221,8 +219,7 @@ void insertion_sort(vector<T>& A, Compare comp) {
 
     // Assume the first element is sorted
     for (int i = 1; i < n; ++i) {
-        // Set the key as the first element of the unsorted
-        // portion
+        // Set the key as the first element of the unsorted portion
         T key = A[i];
         int j = i - 1;
 
@@ -246,13 +243,13 @@ void insertion_sort(vector<T>& A) {
  * Divides the array into two halves, recursively sorts them,
  * and then merges the two sorted halves.
  */
-void merge_sort(vector<int>& A, int left, int right) {
+template <typename T>
+void merge_sort(vector<T>& A, int left, int right) {
     if (left >= right) {
         return; // Base case: array has 0 or 1 element
     }
 
-    int m =
-        left + (right - left) / 2; // Calculate middle position
+    int m = left + (right - left) / 2; // Calculate middle position
 
     merge_sort(A, left, m);      // Recursively sort left half
     merge_sort(A, m + 1, right); // Recursively sort right half
@@ -267,11 +264,12 @@ void merge_sort(vector<int>& A, int left, int right) {
  * @param m End index of first subarray (middle)
  * @param right End index of second subarray
  */
-void merge(vector<int>& A, int left, int m, int right) {
+template <typename T>
+void merge(vector<T>& A, int left, int m, int right) {
     int n1 = m - left + 1; // Size of left subarray
     int n2 = right - m;    // Size of right subarray
 
-    vector<int> L(n1), R(n2);
+    vector<T> L(n1), R(n2);
 
     // Copy data to temporary arrays
     for (int i = 0; i < n1; ++i) {
@@ -310,13 +308,12 @@ void merge(vector<int>& A, int left, int m, int right) {
  * Picks a pivot element and partitions the array around the
  * pivot, then recursively sorts the sub-arrays.
  */
-void quick_sort(vector<int>& A, int low, int high) {
+template <typename T>
+void quick_sort(vector<T>& A, int low, int high) {
     if (low < high) {
         int pivot_index = partition(A, low, high);
-        quick_sort(A, low,
-                   pivot_index - 1); // Sort left subarray
-        quick_sort(A, pivot_index + 1,
-                   high); // Sort right subarray
+        quick_sort(A, low, pivot_index - 1);  // Sort left subarray
+        quick_sort(A, pivot_index + 1, high); // Sort right subarray
     }
 }
 
@@ -325,9 +322,10 @@ void quick_sort(vector<int>& A, int low, int high) {
  * Partitions the array around a pivot element and returns the
  * pivot's final position. Uses Lomuto partition scheme.
  */
-int partition(vector<int>& A, int low, int high) {
-    int pivot = A[high]; // Choose last element as pivot
-    int i = low - 1;     // Index of smaller element
+template <typename T>
+int partition(vector<T>& A, int low, int high) {
+    T pivot = A[high]; // Choose last element as pivot
+    int i = low - 1;   // Index of smaller element
 
     for (int j = low; j < high; ++j) {
         if (A[j] <= pivot) {
