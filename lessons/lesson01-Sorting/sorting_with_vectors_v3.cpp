@@ -221,8 +221,8 @@ void insertion_sort(vector<T>& A, Compare comp) {
 
     // Assume the first element is sorted
     for (int i = 1; i < n; ++i) {
-        // the key to be inserted will always be the first
-        // element of the unsorted portion
+        // Set the key as the first element of the unsorted
+        // portion
         T key = A[i];
         int j = i - 1;
 
