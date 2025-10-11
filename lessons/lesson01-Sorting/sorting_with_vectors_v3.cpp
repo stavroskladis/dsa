@@ -293,7 +293,8 @@ void merge(vector<T>& A, int left, int m, int right, Compare comp) {
 
     // Merge the temporary arrays back into A[left..right]
     while (i < n1 && j < n2) {
-        if (comp(L[i], R[j]) || !comp(R[j], L[i])) {
+        // !(R[j] < L[i]) => R[j] >= L[i] => L[i] <= R[j]
+        if (!comp(R[j], L[i])) {
             A[k++] = L[i++];
         }
         else {
