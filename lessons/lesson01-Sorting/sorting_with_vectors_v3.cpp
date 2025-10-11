@@ -29,6 +29,9 @@ void insertion_sort(vector<T>& A, Compare comp);
 template <typename T>
 void insertion_sort(vector<T>& A);
 
+template <typename T, typename Compare>
+void merge(vector<T>& A, int l, int m, int r, Compare);
+
 template <typename T>
 void merge(vector<T>& A, int l, int m, int r);
 
@@ -249,11 +252,17 @@ void merge_sort(vector<T>& A, int left, int right) {
         return; // Base case: array has 0 or 1 element
     }
 
-    int m = left + (right - left) / 2; // Calculate middle position
+    // Calculate middle position (truncation toward zero)
+    int m = left + (right - left) / 2;
 
-    merge_sort(A, left, m);      // Recursively sort left half
-    merge_sort(A, m + 1, right); // Recursively sort right half
-    merge(A, left, m, right);    // Merge the two sorted halves
+    // Recursively divide the left half of the vector.
+    merge_sort(A, left, m);
+
+    // Recursively divide the right half of the vector.
+    merge_sort(A, m + 1, right);
+
+    // Merge the two sorted halves (Conquer and Combine)
+    merge(A, left, m, right);
 }
 
 /**
@@ -264,8 +273,8 @@ void merge_sort(vector<T>& A, int left, int right) {
  * @param m End index of first subarray (middle)
  * @param right End index of second subarray
  */
-template <typename T>
-void merge(vector<T>& A, int left, int m, int right) {
+template <typename T, typename Compare>
+void merge(vector<T>& A, int left, int m, int right, Compare comp) {
     int n1 = m - left + 1; // Size of left subarray
     int n2 = right - m;    // Size of right subarray
 
@@ -284,7 +293,7 @@ void merge(vector<T>& A, int left, int m, int right) {
 
     // Merge the temporary arrays back into A[left..right]
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+        if (comp(L[i], R[j]) || !comp(R[j], L[i])) {
             A[k++] = L[i++];
         }
         else {
@@ -293,14 +302,21 @@ void merge(vector<T>& A, int left, int m, int right) {
     }
 
     // Copy remaining elements of L[] if any
+    // j >= n2 (R is exhausted) -> Only L has remaining elements
     while (i < n1) {
         A[k++] = L[i++];
     }
 
     // Copy remaining elements of R[] if any
+    // i >= n1 (L is exhausted) -> Only R has remaining elements
     while (j < n2) {
         A[k++] = R[j++];
     }
+}
+
+template <typename T>
+void merge(vector<T>& A, int left, int m, int right) {
+    merge(A, left, m, right, std::less<T>());
 }
 
 /**
