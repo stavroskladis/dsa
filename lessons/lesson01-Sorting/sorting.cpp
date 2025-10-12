@@ -248,8 +248,9 @@ void insertion_sort(vector<T>& A) {
  */
 template <typename T>
 void merge_sort(vector<T>& A, int left, int right) {
+    // Base case: array has 0 or 1 element
     if (left >= right) {
-        return; // Base case: array has 0 or 1 element
+        return;
     }
 
     // Calculate middle position (truncation toward zero)
