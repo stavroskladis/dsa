@@ -44,6 +44,9 @@ void quick_sort(vector<T>& A, int low, int high);
 template <typename T>
 int partition(vector<T>& A, int low, int high);
 
+template <typename T>
+int lomuto_partition(vector<T>& A, int low, int high);
+
 /* std::sort: O(n log n) - highly optimized, uses introsort */
 
 int main() {
@@ -80,8 +83,8 @@ int main() {
     cout << endl << "Sorted by Merge Sort (ascending)" << endl;
     print_vector<int>(v4);
 
-    // auto v5 = arr; // TODO: restore
-    vector<int> v5{7, 2, 1, 6, 4, 5}; // TODO: delete
+    // auto v5 = arr;
+    vector<int> v5{3, 4, 7, 7, 7};
     quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
     cout << endl << "Sorted by Quick Sort (ascending)" << endl;
     print_vector<int>(v5);
@@ -328,22 +331,60 @@ void merge(vector<T>& A, int left, int m, int right) {
  */
 template <typename T>
 void quick_sort(vector<T>& A, int low, int high) {
-    if (low < high) {
-        int pivot_index = partition(A, low, high);
-        quick_sort(A, low, pivot_index - 1);  // Sort left subarray
-        quick_sort(A, pivot_index + 1, high); // Sort right subarray
+    if (low >= high) {
+        return;
     }
+
+    int pivot_index = partition(A, low, high);
+    quick_sort(A, low, pivot_index);      // Sort left subarray
+    quick_sort(A, pivot_index + 1, high); // Sort right subarray
 }
 
 /**
  * Partition function for Quick Sort - O(n) time complexity
  * Partitions the array around a pivot element and returns the
  * pivot's final position.
- * For demonstration purposes we will use the Lomuto partition scheme
- * instead of the Hoare partition scheme, which is more efficient.
+ * Implements the Pure Hoare partition scheme, which is more
+ * efficient.
  */
 template <typename T>
 int partition(vector<T>& A, int low, int high) {
+    T pivot = A[low];
+    int i = low - 1;
+    int j = high + 1;
+
+    while (true) {
+
+        // find next element larger than pivot from the left
+        do {
+            ++i;
+        } while (A[i] < pivot);
+
+        // find next element smaller than pivot from the right
+        do {
+            --j;
+        } while (A[j] > pivot);
+
+        // Now, j is pointing to the first element (from the left)
+        // smaller than the pivot. Ensures that there are no elements
+        // smaller than the pivot after the larger element at index i
+
+        // Check if the two pointers meet or cross each other
+        if (i >= j) {
+            return j;
+        }
+
+        // if a smaller element exists after the larger element
+        swap(A[i], A[j]);
+    }
+}
+
+/**
+ * Partition function for Quick Sort - O(n) time complexity
+ * For demonstration purposes we implement the Lomuto partition scheme
+ */
+template <typename T>
+int lomuto_partition(vector<T>& A, int low, int high) {
     T pivot = A[high]; // Choose last element as pivot
     int i = low - 1;   // Index of smaller element
 
