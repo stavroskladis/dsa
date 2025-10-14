@@ -80,9 +80,9 @@ int main() {
     cout << endl << "Sorted by Merge Sort (ascending)" << endl;
     print_vector<int>(v4);
 
-    auto v5 = arr;
+    // auto v5 = arr; // TODO: restore
+    vector<int> v5{7, 2, 1, 6, 4, 5}; // TODO: delete
     quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
-
     cout << endl << "Sorted by Quick Sort (ascending)" << endl;
     print_vector<int>(v5);
 
@@ -338,7 +338,9 @@ void quick_sort(vector<T>& A, int low, int high) {
 /**
  * Partition function for Quick Sort - O(n) time complexity
  * Partitions the array around a pivot element and returns the
- * pivot's final position. Uses Lomuto partition scheme.
+ * pivot's final position.
+ * For demonstration purposes we will use the Lomuto partition scheme
+ * instead of the Hoare partition scheme, which is more efficient.
  */
 template <typename T>
 int partition(vector<T>& A, int low, int high) {
