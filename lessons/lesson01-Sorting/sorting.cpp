@@ -345,13 +345,14 @@ void quick_sort(vector<T>& A, int low, int high) {
  * Partitions the array around a pivot element and returns the
  * pivot's final position.
  * Implements the Pure Hoare partition scheme, which is more
- * efficient.
+ * efficient (fewer swaps, better with duplicates, better cache
+ * performance, balanced partitions).
  */
 template <typename T>
 int partition(vector<T>& A, int low, int high) {
     T pivot = A[low];
-    int i = low - 1;
-    int j = high + 1;
+    int i = low - 1;  // start left pointer before the first element
+    int j = high + 1; // start right pointer after the last element
 
     while (true) {
 
