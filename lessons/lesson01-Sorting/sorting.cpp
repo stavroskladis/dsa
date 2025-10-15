@@ -83,8 +83,7 @@ int main() {
     cout << endl << "Sorted by Merge Sort (ascending)" << endl;
     print_vector<int>(v4);
 
-    // auto v5 = arr;
-    vector<int> v5{3, 4, 7, 7, 7};
+    auto v5 = arr;
     quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
     cout << endl << "Sorted by Quick Sort (ascending)" << endl;
     print_vector<int>(v5);
@@ -371,7 +370,7 @@ int partition(vector<T>& A, int low, int high) {
             return j;
         }
 
-        // if a smaller element exists after the larger element
+        // if a smaller element exists after the larger element swap
         swap(A[i], A[j]);
     }
 }
