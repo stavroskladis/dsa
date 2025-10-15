@@ -365,10 +365,6 @@ int partition(vector<T>& A, int low, int high) {
             --j;
         } while (A[j] > pivot);
 
-        // Now, j is pointing to the first element (from the left)
-        // smaller than the pivot. Ensures that there are no elements
-        // smaller than the pivot after the larger element at index i
-
         // Check if the two pointers meet or cross each other
         if (i >= j) {
             return j;
