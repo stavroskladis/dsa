@@ -30,7 +30,7 @@ template <typename T>
 void insertion_sort(vector<T>& A);
 
 template <typename T, typename Compare>
-void merge(vector<T>& A, int l, int m, int r, Compare);
+void merge(vector<T>& A, int l, int m, int r, Compare comp);
 
 template <typename T>
 void merge(vector<T>& A, int l, int m, int r);
@@ -38,11 +38,14 @@ void merge(vector<T>& A, int l, int m, int r);
 template <typename T>
 void merge_sort(vector<T>& A, int l, int r);
 
+template <typename T, typename Compare>
+void quick_sort(vector<T>& A, int low, int high, Compare comp);
+
 template <typename T>
 void quick_sort(vector<T>& A, int low, int high);
 
-template <typename T>
-int partition(vector<T>& A, int low, int high);
+template <typename T, typename Compare>
+int partition(vector<T>& A, int low, int high, Compare comp);
 
 template <typename T>
 int lomuto_partition(vector<T>& A, int low, int high);
@@ -328,28 +331,34 @@ void merge(vector<T>& A, int left, int m, int right) {
  * Picks a pivot element and partitions the array around the
  * pivot, then recursively sorts the sub-arrays.
  */
-template <typename T>
-void quick_sort(vector<T>& A, int low, int high) {
+template <typename T, typename Compare>
+void quick_sort(vector<T>& A, int low, int high, Compare comp) {
     if (low >= high) {
         return;
     }
 
-    int pivot_index = partition(A, low, high);
-    quick_sort(A, low, pivot_index);      // Sort left subarray
-    quick_sort(A, pivot_index + 1, high); // Sort right subarray
+    int pivot_index = partition(A, low, high, comp);
+    quick_sort(A, low, pivot_index, comp);      // Sort left subarray
+    quick_sort(A, pivot_index + 1, high, comp); // Sort right subarray
+}
+
+template <typename T>
+void quick_sort(vector<T>& A, int low, int high) {
+    quick_sort(A, low, high, std::less<T>());
 }
 
 /**
- * Partition function for Quick Sort - O(n) time complexity
  * Partitions the array around a pivot element and returns the
  * pivot's final position.
  * Implements the Pure Hoare partition scheme, which is more
  * efficient (fewer swaps, better with duplicates, better cache
  * performance, balanced partitions).
+ * We prefer middle element O(nlogn) instead of low O(n^2)
  */
-template <typename T>
-int partition(vector<T>& A, int low, int high) {
-    T pivot = A[low];
+template <typename T, typename Compare>
+int partition(vector<T>& A, int low, int high, Compare comp) {
+    int mid = low + (high - low) / 2;
+    T pivot = A[mid];
     int i = low - 1;  // start left pointer before the first element
     int j = high + 1; // start right pointer after the last element
 
@@ -358,12 +367,12 @@ int partition(vector<T>& A, int low, int high) {
         // find next element larger than pivot from the left
         do {
             ++i;
-        } while (A[i] < pivot);
+        } while (comp(A[i], pivot));
 
         // find next element smaller than pivot from the right
         do {
             --j;
-        } while (A[j] > pivot);
+        } while (comp(pivot, A[j]));
 
         // Check if the two pointers meet or cross each other
         if (i >= j) {
