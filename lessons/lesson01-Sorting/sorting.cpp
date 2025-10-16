@@ -413,7 +413,7 @@ int lomuto_partition(vector<T>& A, int low, int high) {
 }
 
 void count_sort(vector<int>& A) {
-    if (A.empty()) {
+    if (A.empty() || A.size() == 1) {
         return;
     }
 
@@ -428,7 +428,7 @@ void count_sort(vector<int>& A) {
         ++count_vec[num];
     }
 
-    A.clear(); // use clear for simplicity (dynamic resizing)
+    A.clear(); // capacity remains the same (no dynamic allocation)
     for (int i = 0; i <= max_num; ++i) {
         for (int j = 0; j < count_vec[i]; ++j) {
             A.push_back(i);
