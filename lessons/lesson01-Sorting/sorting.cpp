@@ -35,6 +35,9 @@ void merge(vector<T>& A, int l, int m, int r, Compare comp);
 template <typename T>
 void merge(vector<T>& A, int l, int m, int r);
 
+template <typename T, typename Compare>
+void merge_sort(vector<T>& A, int l, int r, Compare comp);
+
 template <typename T>
 void merge_sort(vector<T>& A, int l, int r);
 
@@ -51,6 +54,9 @@ template <typename T>
 int lomuto_partition(vector<T>& A, int low, int high);
 
 // Counting sort works only for int vectors
+template <typename Compare>
+void count_sort(vector<int>& A, Compare comp);
+
 void count_sort(vector<int>& A);
 
 /* std::sort: O(n log n) - highly optimized, uses introsort */
@@ -259,8 +265,8 @@ void insertion_sort(vector<T>& A) {
  * Divides the array into two halves, recursively sorts them,
  * and then merges the two sorted halves.
  */
-template <typename T>
-void merge_sort(vector<T>& A, int left, int right) {
+template <typename T, typename Compare>
+void merge_sort(vector<T>& A, int left, int right, Compare comp) {
     // Base case: array has 0 or 1 element
     if (left >= right) {
         return;
@@ -270,13 +276,18 @@ void merge_sort(vector<T>& A, int left, int right) {
     int m = left + (right - left) / 2;
 
     // Recursively divide the left half of the vector.
-    merge_sort(A, left, m);
+    merge_sort(A, left, m, comp);
 
     // Recursively divide the right half of the vector.
-    merge_sort(A, m + 1, right);
+    merge_sort(A, m + 1, right, comp);
 
     // Merge the two sorted halves (Conquer and Combine)
-    merge(A, left, m, right);
+    merge(A, left, m, right, comp);
+}
+
+template <typename T>
+void merge_sort(vector<T>& A, int left, int right) {
+    merge_sort(A, left, right, std::less<T>());
 }
 
 /**
@@ -412,9 +423,14 @@ int lomuto_partition(vector<T>& A, int low, int high) {
     return i + 1;
 }
 
-// Time Complexity	O(n + k)
-// Space Complexity O(n + k)
-void count_sort(vector<int>& A) {
+/**
+ * For simplicity we do not support negative numbers
+ * To support negative numbers we can use a shifting range.
+ * Time Complexity	O(n + k)
+ * Space Complexity O(n + k)
+ */
+template <typename Compare>
+void count_sort(vector<int>& A, Compare /* comp */) {
     if (A.empty() || A.size() == 1) {
         return;
     }
@@ -431,9 +447,27 @@ void count_sort(vector<int>& A) {
     }
 
     A.clear(); // capacity remains the same (no dynamic allocation)
-    for (int i = 0; i <= max_num; ++i) {
-        for (int j = 0; j < counting_vector[i]; ++j) {
-            A.push_back(i);
+
+    if constexpr (std::is_same_v<Compare, std::less<int>>) {
+        for (int i = 0; i <= max_num; ++i) {
+            for (int j = 0; j < counting_vector[i]; ++j) {
+                A.push_back(i);
+            }
         }
     }
+    else if constexpr (std::is_same_v<Compare, std::greater<int>>) {
+        for (int i = max_num; i >= 0; --i) {
+            for (int j = 0; j < counting_vector[i]; ++j) {
+                A.push_back(i);
+            }
+        }
+    }
+    else {
+        std::cout << "Invalid comparison operator" << std::endl;
+        return;
+    }
+}
+
+void count_sort(vector<int>& A) {
+    count_sort(A, std::less<int>());
 }
