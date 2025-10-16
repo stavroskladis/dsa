@@ -4,111 +4,116 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
-void read_vector(vector<int>& A, int n);
+void read_vector(std::vector<int>& A, int n);
 
 template <typename T>
-void print_vector(const vector<T>& A);
+void print_vector(const std::vector<T>& A);
 
 template <typename T, typename Compare>
-void bubble_sort(vector<T>& A, Compare comp);
+void bubble_sort(std::vector<T>& A, Compare comp);
 
 template <typename T>
-void bubble_sort(vector<T>& A);
+void bubble_sort(std::vector<T>& A);
 
 template <typename T, typename Compare>
-void selection_sort(vector<T>& A, Compare comp);
+void selection_sort(std::vector<T>& A, Compare comp);
 
 template <typename T>
-void selection_sort(vector<T>& A);
+void selection_sort(std::vector<T>& A);
 
 template <typename T, typename Compare>
-void insertion_sort(vector<T>& A, Compare comp);
+void insertion_sort(std::vector<T>& A, Compare comp);
 
 template <typename T>
-void insertion_sort(vector<T>& A);
+void insertion_sort(std::vector<T>& A);
 
 template <typename T, typename Compare>
-void merge(vector<T>& A, int l, int m, int r, Compare comp);
+void merge(std::vector<T>& A, int l, int m, int r, Compare comp);
 
 template <typename T>
-void merge(vector<T>& A, int l, int m, int r);
+void merge(std::vector<T>& A, int l, int m, int r);
 
 template <typename T, typename Compare>
-void merge_sort(vector<T>& A, int l, int r, Compare comp);
+void merge_sort(std::vector<T>& A, int l, int r, Compare comp);
 
 template <typename T>
-void merge_sort(vector<T>& A, int l, int r);
+void merge_sort(std::vector<T>& A, int l, int r);
 
 template <typename T, typename Compare>
-void quick_sort(vector<T>& A, int low, int high, Compare comp);
+void quick_sort(std::vector<T>& A, int low, int high, Compare comp);
 
 template <typename T>
-void quick_sort(vector<T>& A, int low, int high);
+void quick_sort(std::vector<T>& A, int low, int high);
 
 template <typename T, typename Compare>
-int partition(vector<T>& A, int low, int high, Compare comp);
+int partition(std::vector<T>& A, int low, int high, Compare comp);
 
 template <typename T>
-int lomuto_partition(vector<T>& A, int low, int high);
+int lomuto_partition(std::vector<T>& A, int low, int high);
 
 // Counting sort works only for int vectors
 template <typename Compare>
-void count_sort(vector<int>& A, Compare comp);
+void count_sort(std::vector<int>& A, Compare comp);
 
-void count_sort(vector<int>& A);
+void count_sort(std::vector<int>& A);
 
 /* std::sort: O(n log n) - highly optimized, uses introsort */
 
 int main() {
     // Initialize random seed for generating random numbers
-    srand(static_cast<unsigned>(time(nullptr)));
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
 
     const int n = 5;
-    vector<int> arr;
+    std::vector<int> arr;
 
     read_vector(arr, n);
 
-    cout << "Initial array" << endl;
+    std::cout << "Initial array" << std::endl;
     print_vector<int>(arr);
 
     auto v1 = arr;
     bubble_sort(v1);
-    cout << endl << "Sorted by Bubble Sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by Bubble Sort (ascending)" << std::endl;
     print_vector<int>(v1);
 
     auto v2 = arr;
     insertion_sort(v2);
-    cout << endl << "Sorted by Insertion Sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by Insertion Sort (ascending)" << std::endl;
     print_vector<int>(v2);
 
     auto v3 = arr;
     selection_sort(v3);
-    cout << endl << "Sorted by Selection Sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by Selection Sort (ascending)" << std::endl;
     print_vector<int>(v3);
 
     auto v4 = arr;
     // merge_sort arguments: vector v4, start index, end index
     merge_sort(v4, 0, static_cast<int>(v4.size()) - 1);
 
-    cout << endl << "Sorted by Merge Sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by Merge Sort (ascending)" << std::endl;
     print_vector<int>(v4);
 
     auto v5 = arr;
     quick_sort(v5, 0, static_cast<int>(v5.size()) - 1);
-    cout << endl << "Sorted by Quick Sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by Quick Sort (ascending)" << std::endl;
     print_vector<int>(v5);
 
     auto v6 = arr;
     // std::less<T> is the default comparator (ascending order)
     sort(v6.begin(), v6.end());
-    cout << endl << "Sorted by std::sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by std::sort (ascending)" << std::endl;
     print_vector<int>(v6);
 
     auto v7 = arr;
     count_sort(v7);
-    cout << endl << "Sorted by count_sort (ascending)" << endl;
+    std::cout << std::endl
+              << "Sorted by count_sort (ascending)" << std::endl;
     print_vector<int>(v7);
 
     return 0;
@@ -119,12 +124,12 @@ int main() {
  * @param A Reference to vector (modifies the original)
  * @param n Number of elements to read
  */
-void read_vector(vector<int>& A, int n) {
+void read_vector(std::vector<int>& A, int n) {
     A.resize(n); // Resize vector to exactly n elements
 
     for (int i = 0; i < n; ++i) {
         // Generate random numbers from 1 to 10
-        A[i] = rand() % 10 + 1;
+        A[i] = std::rand() % 10 + 1;
     }
 }
 
@@ -134,11 +139,11 @@ void read_vector(vector<int>& A, int n) {
  * modification)
  */
 template <typename T>
-void print_vector(const vector<T>& A) {
+void print_vector(const std::vector<T>& A) {
     for (const auto& elem : A) {
-        cout << elem << "\t";
+        std::cout << elem << "\t";
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
 /**
@@ -148,7 +153,7 @@ void print_vector(const vector<T>& A) {
  * order. The process is repeated until no swaps are needed.
  */
 template <typename T, typename Compare>
-void bubble_sort(vector<T>& A, Compare comp) {
+void bubble_sort(std::vector<T>& A, Compare comp) {
     size_t n = A.size();
     // Avoid underflow (n - 1 underflows to SIZE_MAX) or
     // negative numbers in case of int type
@@ -162,7 +167,7 @@ void bubble_sort(vector<T>& A, Compare comp) {
         // Subtract i to avoid the comparison of sorted elements
         for (size_t j = 0; j < n - 1 - i; ++j) {
             if (comp(A[j + 1], A[j])) {
-                swap(A[j], A[j + 1]);
+                std::swap(A[j], A[j + 1]);
                 swapped = true;
             }
         }
@@ -180,7 +185,7 @@ void bubble_sort(vector<T>& A, Compare comp) {
  * default
  */
 template <typename T>
-void bubble_sort(vector<T>& A) {
+void bubble_sort(std::vector<T>& A) {
     bubble_sort(A, std::less<T>());
 }
 
@@ -190,7 +195,7 @@ void bubble_sort(vector<T>& A) {
  * it with the first element of the unsorted portion.
  */
 template <typename T, typename Compare>
-void selection_sort(vector<T>& A, Compare comp) {
+void selection_sort(std::vector<T>& A, Compare comp) {
     size_t n = A.size();
     if (n <= 1) {
         return;
@@ -213,7 +218,7 @@ void selection_sort(vector<T>& A, Compare comp) {
         // Swap the smallest element with
         // the first element of the unsorted part
         if (idx != i) {
-            swap(A[i], A[idx]);
+            std::swap(A[i], A[idx]);
         }
     }
 }
@@ -224,7 +229,7 @@ void selection_sort(vector<T>& A, Compare comp) {
  * default
  */
 template <typename T>
-void selection_sort(vector<T>& A) {
+void selection_sort(std::vector<T>& A) {
     selection_sort(A, std::less<T>());
 }
 
@@ -235,7 +240,7 @@ void selection_sort(vector<T>& A) {
  * their correct position.
  */
 template <typename T, typename Compare>
-void insertion_sort(vector<T>& A, Compare comp) {
+void insertion_sort(std::vector<T>& A, Compare comp) {
     // Usage of size_t for index j, would result in underflow
     int n = static_cast<int>(A.size());
 
@@ -256,7 +261,7 @@ void insertion_sort(vector<T>& A, Compare comp) {
 }
 
 template <typename T>
-void insertion_sort(vector<T>& A) {
+void insertion_sort(std::vector<T>& A) {
     insertion_sort(A, std::less<T>());
 }
 
@@ -266,7 +271,8 @@ void insertion_sort(vector<T>& A) {
  * and then merges the two sorted halves.
  */
 template <typename T, typename Compare>
-void merge_sort(vector<T>& A, int left, int right, Compare comp) {
+void merge_sort(std::vector<T>& A, int left, int right,
+                Compare comp) {
     // Base case: array has 0 or 1 element
     if (left >= right) {
         return;
@@ -286,7 +292,7 @@ void merge_sort(vector<T>& A, int left, int right, Compare comp) {
 }
 
 template <typename T>
-void merge_sort(vector<T>& A, int left, int right) {
+void merge_sort(std::vector<T>& A, int left, int right) {
     merge_sort(A, left, right, std::less<T>());
 }
 
@@ -299,11 +305,12 @@ void merge_sort(vector<T>& A, int left, int right) {
  * @param right End index of second subarray
  */
 template <typename T, typename Compare>
-void merge(vector<T>& A, int left, int m, int right, Compare comp) {
+void merge(std::vector<T>& A, int left, int m, int right,
+           Compare comp) {
     int n1 = m - left + 1; // Size of left subarray
     int n2 = right - m;    // Size of right subarray
 
-    vector<T> L(n1), R(n2);
+    std::vector<T> L(n1), R(n2);
 
     // Copy data to temporary arrays
     for (int i = 0; i < n1; ++i) {
@@ -341,7 +348,7 @@ void merge(vector<T>& A, int left, int m, int right, Compare comp) {
 }
 
 template <typename T>
-void merge(vector<T>& A, int left, int m, int right) {
+void merge(std::vector<T>& A, int left, int m, int right) {
     merge(A, left, m, right, std::less<T>());
 }
 
@@ -351,7 +358,7 @@ void merge(vector<T>& A, int left, int m, int right) {
  * pivot, then recursively sorts the sub-arrays.
  */
 template <typename T, typename Compare>
-void quick_sort(vector<T>& A, int low, int high, Compare comp) {
+void quick_sort(std::vector<T>& A, int low, int high, Compare comp) {
     if (low >= high) {
         return;
     }
@@ -362,7 +369,7 @@ void quick_sort(vector<T>& A, int low, int high, Compare comp) {
 }
 
 template <typename T>
-void quick_sort(vector<T>& A, int low, int high) {
+void quick_sort(std::vector<T>& A, int low, int high) {
     quick_sort(A, low, high, std::less<T>());
 }
 
@@ -375,7 +382,7 @@ void quick_sort(vector<T>& A, int low, int high) {
  * We prefer middle element O(nlogn) instead of low O(n^2)
  */
 template <typename T, typename Compare>
-int partition(vector<T>& A, int low, int high, Compare comp) {
+int partition(std::vector<T>& A, int low, int high, Compare comp) {
     int mid = low + (high - low) / 2;
     T pivot = A[mid];
     int i = low - 1;  // start left pointer before the first element
@@ -399,7 +406,7 @@ int partition(vector<T>& A, int low, int high, Compare comp) {
         }
 
         // if a smaller element exists after the larger element swap
-        swap(A[i], A[j]);
+        std::swap(A[i], A[j]);
     }
 }
 
@@ -408,18 +415,18 @@ int partition(vector<T>& A, int low, int high, Compare comp) {
  * For demonstration purposes we implement the Lomuto partition scheme
  */
 template <typename T>
-int lomuto_partition(vector<T>& A, int low, int high) {
+int lomuto_partition(std::vector<T>& A, int low, int high) {
     T pivot = A[high]; // Choose last element as pivot
     int i = low - 1;   // Index of smaller element
 
     for (int j = low; j < high; ++j) {
         if (A[j] <= pivot) {
             ++i;
-            swap(A[i], A[j]);
+            std::swap(A[i], A[j]);
         }
     }
 
-    swap(A[i + 1], A[high]);
+    std::swap(A[i + 1], A[high]);
     return i + 1;
 }
 
@@ -430,7 +437,7 @@ int lomuto_partition(vector<T>& A, int low, int high) {
  * Space Complexity O(n + k)
  */
 template <typename Compare>
-void count_sort(vector<int>& A, Compare /* comp */) {
+void count_sort(std::vector<int>& A, Compare /* comp */) {
     if (A.empty() || A.size() == 1) {
         return;
     }
@@ -439,7 +446,7 @@ void count_sort(vector<int>& A, Compare /* comp */) {
     int max_num = *max_element(A.begin(), A.end());
 
     // Create count array of size max_num + 1, initialized to 0
-    vector<int> counting_vector(max_num + 1, 0);
+    std::vector<int> counting_vector(max_num + 1, 0);
 
     // Count each numbers occurence in the input vector
     for (int num : A) {
@@ -468,6 +475,6 @@ void count_sort(vector<int>& A, Compare /* comp */) {
     }
 }
 
-void count_sort(vector<int>& A) {
+void count_sort(std::vector<int>& A) {
     count_sort(A, std::less<int>());
 }
