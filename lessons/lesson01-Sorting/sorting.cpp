@@ -50,6 +50,9 @@ int partition(vector<T>& A, int low, int high, Compare comp);
 template <typename T>
 int lomuto_partition(vector<T>& A, int low, int high);
 
+// Counting sort works only for int vectors
+void count_sort(vector<int>& A);
+
 /* std::sort: O(n log n) - highly optimized, uses introsort */
 
 int main() {
@@ -96,6 +99,11 @@ int main() {
     sort(v6.begin(), v6.end());
     cout << endl << "Sorted by std::sort (ascending)" << endl;
     print_vector<int>(v6);
+
+    auto v7 = arr;
+    count_sort(v7);
+    cout << endl << "Sorted by count_sort (ascending)" << endl;
+    print_vector<int>(v7);
 
     return 0;
 }
@@ -402,4 +410,28 @@ int lomuto_partition(vector<T>& A, int low, int high) {
 
     swap(A[i + 1], A[high]);
     return i + 1;
+}
+
+void count_sort(vector<int>& A) {
+    if (A.empty()) {
+        return;
+    }
+
+    // Find the maximum element to determine the range
+    int max_num = *max_element(A.begin(), A.end());
+
+    // Create count array of size max_num + 1, initialized to 0
+    vector<int> count_vec(max_num + 1, 0);
+
+    // Count each numbers occurence in the input vector
+    for (int num : A) {
+        ++count_vec[num];
+    }
+
+    A.clear(); // use clear for simplicity (dynamic resizing)
+    for (int i = 0; i <= max_num; ++i) {
+        for (int j = 0; j < count_vec[i]; ++j) {
+            A.push_back(i);
+        }
+    }
 }
