@@ -412,6 +412,8 @@ int lomuto_partition(vector<T>& A, int low, int high) {
     return i + 1;
 }
 
+// Time Complexity	O(n + k)
+// Space Complexity O(n + k)
 void count_sort(vector<int>& A) {
     if (A.empty() || A.size() == 1) {
         return;
@@ -421,16 +423,16 @@ void count_sort(vector<int>& A) {
     int max_num = *max_element(A.begin(), A.end());
 
     // Create count array of size max_num + 1, initialized to 0
-    vector<int> count_vec(max_num + 1, 0);
+    vector<int> counting_vector(max_num + 1, 0);
 
     // Count each numbers occurence in the input vector
     for (int num : A) {
-        ++count_vec[num];
+        ++counting_vector[num];
     }
 
     A.clear(); // capacity remains the same (no dynamic allocation)
     for (int i = 0; i <= max_num; ++i) {
-        for (int j = 0; j < count_vec[i]; ++j) {
+        for (int j = 0; j < counting_vector[i]; ++j) {
             A.push_back(i);
         }
     }
