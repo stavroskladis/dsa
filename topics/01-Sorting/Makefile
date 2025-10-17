@@ -1,4 +1,4 @@
-# Simple Makefile for Lesson 1: Getting Started
+# Topic Makefile
 # Compiles all .cpp files in this directory
 
 # Compiler and flags

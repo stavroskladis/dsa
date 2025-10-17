@@ -1,43 +1,43 @@
 # Root Makefile for C++ Learning Project
-# Compiles all lessons or specific lessons
+# Compiles all topics or specific topics
 
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++23 -Wall -Wextra
 
-# Get all lesson directories
-LESSONS = $(wildcard lessons/lesson*)
+# Get all topic directories
+TOPICS = $(wildcard topics/*)
 
-# Default target - compile all lessons
-all: $(LESSONS)
+# Default target - compile all topics
+all: $(TOPICS)
 
-# Compile each lesson
-$(LESSONS):
+# Compile each topic
+$(TOPICS):
 	@echo "Compiling $@..."
 	@$(MAKE) -C $@
 
-# Clean all lessons
+# Clean all topics
 clean:
-	@echo "Cleaning all lessons..."
-	@for lesson in $(LESSONS); do \
-		$(MAKE) -C $$lesson clean; \
+	@echo "Cleaning all topics..."
+	@for topic in $(TOPICS); do \
+		$(MAKE) -C $$topic clean; \
 	done
 
 # Show available targets
 help:
 	@echo "Available targets:"
-	@echo "  all    - Compile all lessons"
-	@echo "  clean  - Clean all lessons"
+	@echo "  all    - Compile all topics"
+	@echo "  clean  - Clean all topics"
 	@echo "  help   - Show this help message"
 	@echo ""
-	@echo "To compile a specific lesson: make lessons/lesson01-Sorting"
-	@echo "To clean a specific lesson: make -C lessons/lesson01-Sorting clean"
+	@echo "To compile a specific topic: make topics/01-Sorting"
+	@echo "To clean a specific topic: make -C topics/01-Sorting clean"
 
-# Show lesson list
-lessons:
-	@echo "Available lessons:"
-	@for lesson in $(LESSONS); do \
-		echo "  $$lesson"; \
+# Show topic list
+topics:
+	@echo "Available topics:"
+	@for topic in $(TOPICS); do \
+		echo "  $$topic"; \
 	done
 
-.PHONY: all clean help lessons $(LESSONS)
+.PHONY: all clean help topics $(TOPICS)

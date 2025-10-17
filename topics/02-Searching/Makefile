@@ -1,43 +1,31 @@
-# Root Makefile for C++ Learning Project
-# Compiles all lessons or specific lessons
+# Topic Makefile
+# Compiles all .cpp files in this directory
 
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++23 -Wall -Wextra
 
-# Get all lesson directories
-LESSONS = $(wildcard lessons/lesson*)
+# Find all .cpp files in current directory
+SOURCES = $(wildcard *.cpp)
+TARGETS = $(SOURCES:.cpp=)
 
-# Default target - compile all lessons
-all: $(LESSONS)
+# Default target
+all: $(TARGETS)
 
-# Compile each lesson
-$(LESSONS):
-	@echo "Compiling $@..."
-	@$(MAKE) -C $@
+# Compile each .cpp file to executable
+%: %.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
 
-# Clean all lessons
+# Clean target - remove all executables
 clean:
-	@echo "Cleaning all lessons..."
-	@for lesson in $(LESSONS); do \
-		$(MAKE) -C $$lesson clean; \
-	done
+	rm -f $(TARGETS)
 
-# Show available targets
+# Show help
 help:
 	@echo "Available targets:"
-	@echo "  all    - Compile all lessons"
-	@echo "  clean  - Clean all lessons"
+	@echo "  all    - Compile all .cpp files"
+	@echo "  clean  - Remove all executables"
 	@echo "  help   - Show this help message"
 	@echo ""
-	@echo "To compile a specific lesson: make lessons/lesson01-getting-started"
-	@echo "To clean a specific lesson: make -C lessons/lesson01-getting-started clean"
-
-# Show lesson list
-lessons:
-	@echo "Available lessons:"
-	@for lesson in $(LESSONS); do \
-		echo "  $$lesson"; \
-	done
-
-.PHONY: all clean help lessons $(LESSONS)
+	@echo "To compile a specific file: make filename"
+	@echo "To run a program: ./filename"
