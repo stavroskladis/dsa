@@ -2,8 +2,18 @@
 #define SORTING_H
 
 #include <algorithm>
+#include <concepts>
 #include <iostream>
 #include <vector>
+
+/**
+ * This concept ensures that the comparator comp can compare two
+ * objects of type T and provides clear compile-time error messages.
+ */
+template <typename T, typename Compare>
+concept Comparable = requires(T a, T b, Compare comp) {
+    { comp(a, b) } -> std::convertible_to<bool>;
+};
 
 /**
  * Bubble Sort Algorithm (ascending sorting) - O(n^2) time
@@ -12,6 +22,7 @@
  * order. The process is repeated until no swaps are needed.
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void bubble_sort(std::vector<T>& A, Compare comp) {
     size_t n = A.size();
     // Avoid underflow (n - 1 underflows to SIZE_MAX) or
@@ -54,6 +65,7 @@ void bubble_sort(std::vector<T>& A) {
  * it with the first element of the unsorted portion.
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void selection_sort(std::vector<T>& A, Compare comp) {
     size_t n = A.size();
     if (n <= 1) {
@@ -99,6 +111,7 @@ void selection_sort(std::vector<T>& A) {
  * their correct position.
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void insertion_sort(std::vector<T>& A, Compare comp) {
     // Usage of size_t for index j, would result in underflow
     int n = static_cast<int>(A.size());
@@ -133,6 +146,7 @@ void insertion_sort(std::vector<T>& A) {
  * @param right End index of second subarray
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void merge(std::vector<T>& A, int left, int m, int right,
            Compare comp) {
     int n1 = m - left + 1; // Size of left subarray
@@ -186,6 +200,7 @@ void merge(std::vector<T>& A, int left, int m, int right) {
  * and then merges the two sorted halves.
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void merge_sort(std::vector<T>& A, int left, int right,
                 Compare comp) {
     // Base case: array has 0 or 1 element
@@ -214,6 +229,7 @@ void merge_sort(std::vector<T>& A, int left, int right) {
 /**
  * Partition function for Quick Sort - O(n) time complexity
  * For demonstration purposes we implement the Lomuto partition scheme
+ * We don't use a comparator here for simplicity.
  */
 template <typename T>
 int lomuto_partition(std::vector<T>& A, int low, int high) {
@@ -240,6 +256,7 @@ int lomuto_partition(std::vector<T>& A, int low, int high) {
  * We prefer middle element O(nlogn) instead of low O(n^2)
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 int partition(std::vector<T>& A, int low, int high, Compare comp) {
     int mid = low + (high - low) / 2;
     T pivot = A[mid];
@@ -274,6 +291,7 @@ int partition(std::vector<T>& A, int low, int high, Compare comp) {
  * pivot, then recursively sorts the sub-arrays.
  */
 template <typename T, typename Compare>
+    requires Comparable<T, Compare>
 void quick_sort(std::vector<T>& A, int low, int high, Compare comp) {
     if (low >= high) {
         return;
@@ -296,6 +314,7 @@ void quick_sort(std::vector<T>& A, int low, int high) {
  * Space Complexity O(n + k)
  */
 template <typename Compare>
+    requires Comparable<int, Compare>
 void count_sort(std::vector<int>& A, Compare /* comp */) {
     if (A.empty() || A.size() == 1) {
         return;
