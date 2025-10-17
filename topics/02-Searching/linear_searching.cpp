@@ -1,7 +1,13 @@
 #include <iostream>
 #include <vector>
 
-// Linear searching on a vector - O(n) time complexity.
+/**
+ * Linear searching on a vector.
+ *  - Best Case Time Complexity O(1)
+ *  - Worst Case Time Complexity O(n)
+ *  - Average Time Complexity O(n)
+ *  - Space Complexity O(1)
+ */
 template <typename T>
 int linear_search(const std::vector<T>& arr, T target) {
 
