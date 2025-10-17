@@ -38,7 +38,6 @@ int main() {
     print_vector<int>(v3);
 
     auto v4 = arr;
-    // merge_sort arguments: vector v4, start index, end index
     merge_sort(v4, 0, static_cast<int>(v4.size()) - 1);
 
     std::cout << std::endl

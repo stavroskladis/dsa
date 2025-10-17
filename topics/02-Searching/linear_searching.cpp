@@ -1,3 +1,7 @@
+#include "utils.hpp"
+
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <vector>
 
@@ -21,11 +25,22 @@ int linear_search(const std::vector<T>& arr, T target) {
 }
 
 int main() {
-    std::vector<int> nums{9, 10, 5, 8, 7, 4, 11, 6, 15, 3};
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+    const int n = 5;
+    std::vector<int> nums;
+
+    read_vector(nums, n);
+
+    std::cout << "Initial array" << std::endl;
+    print_vector<int>(nums);
+
     int target = 5;
 
     int idx = linear_search(nums, target);
 
-    std::cout << idx << std::endl;
+    std::cout << "\nTarget " << target << " found at index " << idx
+              << std::endl;
+
     return 0;
 }
