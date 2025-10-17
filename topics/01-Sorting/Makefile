@@ -3,7 +3,7 @@
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++23 -Wall -Wextra
+CXXFLAGS = -std=c++23 -Wall -Wextra -I../../includes
 
 # Find all .cpp files in current directory
 SOURCES = $(wildcard *.cpp)

@@ -1,15 +1,11 @@
 #include "sorting.hpp"
+#include "utils.hpp"
 
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <vector>
-
-void read_vector(std::vector<int>& A, int n);
-
-template <typename T>
-void print_vector(const std::vector<T>& A);
 
 int main() {
     // Initialize random seed for generating random numbers
@@ -69,31 +65,4 @@ int main() {
     print_vector<int>(v7);
 
     return 0;
-}
-
-/**
- * Reads n random integers into vector A
- * @param A Reference to vector (modifies the original)
- * @param n Number of elements to read
- */
-void read_vector(std::vector<int>& A, int n) {
-    A.resize(n); // Resize vector to exactly n elements
-
-    for (int i = 0; i < n; ++i) {
-        // Generate random numbers from 1 to 10
-        A[i] = std::rand() % 10 + 1;
-    }
-}
-
-/**
- * Prints vector elements separated by tabs
- * @param A Const reference to vector (guarantees no
- * modification)
- */
-template <typename T>
-void print_vector(const std::vector<T>& A) {
-    for (const auto& elem : A) {
-        std::cout << elem << "\t";
-    }
-    std::cout << std::endl;
 }
