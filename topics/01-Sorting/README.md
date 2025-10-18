@@ -37,7 +37,7 @@ This directory contains implementations of fundamental sorting algorithms in C++
 // to create a fresh copy of the data before each sort (omitted here).
 std::vector<int> data = {64, 34, 25, 12, 22, 11, 90};
 
-// Ascending order (default mode so we can ommit: std::less<int>())
+// Ascending order (default mode so we can omit: std::less<int>())
 bubble_sort(data, std::less<int>());
 selection_sort(data, std::less<int>());
 insertion_sort(data, std::less<int>());
@@ -70,7 +70,7 @@ count_sort(data, std::greater<int>());
 
 ## Requirements
 
-C++17 or later compiler
+C++20 or later compiler (due to the usage of concepts)
 
 ## Notes
 
