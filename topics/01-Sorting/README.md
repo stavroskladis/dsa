@@ -91,6 +91,19 @@ This hybrid approach is why `std::sort` is so fast in practice!
 - **Fallback**: In-place merge sort when memory limited (O(n log² n) with O(1) space)
 - **Stability**: Guaranteed by always taking from left subarray when elements are equal
 
+## Which one to prefer and why
+**Why std::sort uses Introsort (unstable):**
+Quick Sort and Heap Sort (the core of introsort) are inherently unstable - 
+their partitioning and heap operations reorder equal elements. This is 
+acceptable because std::sort doesn't guarantee stability, allowing it to 
+prioritize speed and memory efficiency.
+
+**Why std::stable_sort uses Merge Sort (stable):**
+Merge Sort is naturally stable - its merge operation can be implemented to 
+always take from the left subarray when elements are equal, preserving their 
+original relative order. The trade-off is O(n) extra space and slightly 
+slower performance.
+
 ## Building and Running
 
 ```bash

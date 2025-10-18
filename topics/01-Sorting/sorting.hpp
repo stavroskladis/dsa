@@ -167,7 +167,10 @@ void merge(std::vector<T>& A, int left, int m, int right,
 
     // Merge the temporary arrays back into A[left..right]
     while (i < n1 && j < n2) {
-        // !(R[j] < L[i]) => R[j] >= L[i] => L[i] <= R[j]
+        // For equal elements (!comp(R[j], L[i]) => R[j] >= L[i]) is
+        // true, we always take from the left subarray first. This is
+        // the key to make Merge Sort stable (equal elements maintain
+        // original order)
         if (!comp(R[j], L[i])) {
             A[k++] = L[i++];
         }
