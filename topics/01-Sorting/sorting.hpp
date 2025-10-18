@@ -314,7 +314,9 @@ void quick_sort(std::vector<T>& A, int low, int high) {
  * Space Complexity O(n + k)
  */
 template <typename Compare>
-    requires Comparable<int, Compare>
+    requires Comparable<int, Compare> &&
+             (std::is_same_v<Compare, std::less<int>> ||
+              std::is_same_v<Compare, std::greater<int>>)
 void count_sort(std::vector<int>& A, Compare /* comp */) {
     if (A.empty() || A.size() == 1) {
         return;
@@ -326,7 +328,7 @@ void count_sort(std::vector<int>& A, Compare /* comp */) {
     // Create count array of size max_num + 1, initialized to 0
     std::vector<int> counting_vector(max_num + 1, 0);
 
-    // Count each numbers occurence in the input vector
+    // Count each number's occurence in the input vector
     for (int num : A) {
         ++counting_vector[num];
     }
@@ -340,16 +342,12 @@ void count_sort(std::vector<int>& A, Compare /* comp */) {
             }
         }
     }
-    else if constexpr (std::is_same_v<Compare, std::greater<int>>) {
+    else {
         for (int i = max_num; i >= 0; --i) {
             for (int j = 0; j < counting_vector[i]; ++j) {
                 A.push_back(i);
             }
         }
-    }
-    else {
-        std::cout << "Invalid comparison operator" << std::endl;
-        return;
     }
 }
 
