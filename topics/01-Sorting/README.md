@@ -56,21 +56,45 @@ count_sort(data, std::greater<int>());
 
 ## When to Use Each Algorithm
 
-**Bubble Sort**: Educational purposes only, avoid in production
+**Bubble Sort**: Educational purposes only (inefficient for production)
 
-**Selection Sort**: When memory writes are expensive (minimizes swaps)
+**Selection Sort**: When minimizing memory writes is critical (only n-1 swaps)
 
-**Insertion Sort**: Small arrays (n < 10-20) or nearly sorted data
+**Insertion Sort**: Small datasets (n < 20) or nearly sorted data
 
-**Merge Sort**: When stability is required or working with linked lists
+**Merge Sort**: Guaranteed O(n log n), stable sorting, linked lists, external data
 
-**Quick Sort**: General purpose sorting, excellent average performance
+**Quick Sort**: General purpose sorting, excellent average performance in large random datasets (prefer insertion sort for small datasets)
 
-**Count Sort**: Integers with small range, need linear time performance
+**Counting Sort**: Integer values within a small known range, need linear time
 
 ## Requirements
 
 C++20 or later compiler (due to the usage of concepts)
+
+## Relationship to STL Algorithms
+
+### `std::sort` - Introsort (Hybrid Algorithm)
+Modern `std::sort` uses **introsort** (introspective sort), which combines:
+1. **Quicksort** - for general case (O(n log n) average)
+2. **Heapsort** - if recursion depth gets too deep (prevents O(n²) worst case)
+3. **Insertion sort** - for small subarrays (< 16 elements typically)
+
+This hybrid approach is why `std::sort` is so fast in practice!
+
+### `std::stable_sort` - Merge Sort
+`std::stable_sort` primarily uses **merge sort**
+
+**Implementation details:**
+- **Primary algorithm**: Merge sort (O(n log n) with O(n) space)
+- **Optimization**: Insertion sort for small chunks
+- **Fallback**: In-place merge sort when memory limited (O(n log² n) with O(1) space)
+- **Stability**: Guaranteed by always taking from left subarray when elements are equal
+
+Our merge sort implementation is essentially the core of `std::stable_sort`! The main differences are:
+- `std::stable_sort` has optimizations for small ranges
+- It has a fallback for low-memory situations
+- It's heavily optimized with compiler intrinsics
 
 ## Notes
 
