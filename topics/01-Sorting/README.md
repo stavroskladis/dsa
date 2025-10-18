@@ -91,10 +91,6 @@ This hybrid approach is why `std::sort` is so fast in practice!
 - **Fallback**: In-place merge sort when memory limited (O(n log² n) with O(1) space)
 - **Stability**: Guaranteed by always taking from left subarray when elements are equal
 
-Our merge sort implementation is essentially the core of `std::stable_sort`! The main differences are:
-- `std::stable_sort` has optimizations for small ranges
-- It has a fallback for low-memory situations
-- It's heavily optimized with compiler intrinsics
 
 ## Notes
 
