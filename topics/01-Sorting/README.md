@@ -12,7 +12,7 @@ This directory contains implementations of fundamental sorting algorithms in C++
 - **Quick Sort** - Fast average case, uses Hoare partition with middle pivot
 
 ### Non-Comparison Sort
-- **Count Sort** - Linear time for integers within a known range, only works with `std::less<int>` and `std::greater<int>`
+- **Counting Sort** - Linear time for integers within a known range, only works with `std::less<int>` and `std::greater<int>`
 
 ## Algorithm Comparison
 
@@ -23,7 +23,7 @@ This directory contains implementations of fundamental sorting algorithms in C++
 | Insertion Sort | O(n)        | O(n²)       | O(n²)        | O(1)     | Yes    |
 | Merge Sort     | O(n log n)  | O(n log n)  | O(n log n)   | O(n)     | Yes    |
 | Quick Sort     | O(n log n)  | O(n log n)  | O(n²)        | O(log n) | No     |
-| Count Sort     | O(n+k)*     | O(n+k)*     | O(n+k)*      | O(k)*    | Yes    |
+| Counting Sort  | O(n+k)*     | O(n+k)*     | O(n+k)*      | O(k)*    | Yes    |
 
 *k = range of input values (max - min + 1)
 
@@ -91,9 +91,22 @@ This hybrid approach is why `std::sort` is so fast in practice!
 - **Fallback**: In-place merge sort when memory limited (O(n log² n) with O(1) space)
 - **Stability**: Guaranteed by always taking from left subarray when elements are equal
 
+## Building and Running
+
+```bash
+# Navigate to the sorting directory
+cd topics/01-Sorting
+
+# Compile
+make
+
+# Run
+./sorting
+```
 
 ## Notes
 
-- Count Sort only supports `std::less<int>` and `std::greater<int>` comparators due to its counting-based nature
+- Counting Sort only supports `std::less<int>` and `std::greater<int>` comparators due to its counting-based nature
 - All comparison-based sorts support any custom comparator
 - Quick Sort uses Hoare partition scheme with middle element as pivot for better performance on sorted/reverse-sorted inputs
+- For production code, prefer `std::sort` (introsort) over pure Quick Sort for guaranteed O(n log n) worst case
