@@ -229,6 +229,7 @@ void merge_sort(std::vector<T>& A, int left, int right) {
 /**
  * Partition function for Quick Sort - O(n) time complexity
  * For demonstration purposes we implement the Lomuto partition scheme
+ * Kept for educational/comparison purposes
  * We don't use a comparator here for simplicity.
  */
 template <typename T>
@@ -323,7 +324,7 @@ void count_sort(std::vector<int>& A, Compare /* comp */) {
     }
 
     // Find the maximum element to determine the range
-    int max_num = *max_element(A.begin(), A.end());
+    int max_num = *std::max_element(A.begin(), A.end());
 
     // Create count array of size max_num + 1, initialized to 0
     std::vector<int> counting_vector(max_num + 1, 0);
@@ -333,7 +334,7 @@ void count_sort(std::vector<int>& A, Compare /* comp */) {
         ++counting_vector[num];
     }
 
-    A.clear(); // capacity remains the same (no dynamic allocation)
+    A.clear(); // used for simplicity (possible dynamic allocation)
 
     if constexpr (std::is_same_v<Compare, std::less<int>>) {
         for (int i = 0; i <= max_num; ++i) {

@@ -52,7 +52,7 @@ int main() {
 
     auto v6 = arr;
     // std::less<T> is the default comparator (ascending order)
-    sort(v6.begin(), v6.end());
+    std::sort(v6.begin(), v6.end());
     std::cout << std::endl
               << "Sorted by std::sort (ascending)" << std::endl;
     print_vector<int>(v6);
