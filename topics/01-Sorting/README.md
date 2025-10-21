@@ -101,8 +101,9 @@ prioritize speed and memory efficiency.
 **Why std::stable_sort uses Merge Sort (stable):**
 Merge Sort is naturally stable - its merge operation can be implemented to 
 always take from the left subarray when elements are equal, preserving their 
-original relative order. The trade-off is O(n) extra space and slightly 
-slower performance.
+original relative order. The trade-off is O(n) extra space and slightly slower performance.
+
+Choose `std::sort` when you need maximum speed and don't care about preserving the relative order of equal elements. Choose `std::stable_sort` when stability matters (e.g., sorting by secondary keys while maintaining primary sort order).
 
 ## Building and Running
 
