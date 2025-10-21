@@ -34,8 +34,12 @@ int linear_search(const std::vector<T>& A, T target) {
  */
 template <typename T>
 int binary_search(const std::vector<T>& A, T target) {
+    if (A.empty()) {
+        return -1;
+    }
+
     int low = 0;
-    int high = A.size() - 1;
+    int high = static_cast<int>(A.size()) - 1;
 
     while (low <= high) {
         int mid = low + (high - low) / 2;
