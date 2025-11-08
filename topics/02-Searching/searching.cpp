@@ -20,7 +20,9 @@ int main() {
     print_vector<int>(nums);
     std::cout << std::endl;
 
-    int idx = linear_search(nums, target);
+    /* Basic Search Algorithms: Linear Search */
+    auto nums_ls = nums;
+    int idx = linear_search(nums_ls, target);
     std::cout << "Linear searching" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
@@ -32,20 +34,33 @@ int main() {
     print_vector<int>(nums);
     std::cout << std::endl;
 
-    idx = binary_search(nums, target);
+    /* Binary Search */
+    auto nums_bs = nums;
+    idx = binary_search(nums_bs, target);
     std::cout << "Binary searching" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
                            : " not found")
               << "\n\n";
 
-    idx = binary_search_recursive(nums, target, 0,
+    /* Binary Search (using recursive calls) */
+    auto nums_bsr = nums;
+    idx = binary_search_recursive(nums_bsr, target, 0,
                                   static_cast<int>(nums.size()) - 1);
     std::cout << "Recursive Binary searching" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
                            : " not found")
               << "\n\n";
+
+    idx = lower_bound(nums, target);
+    std::cout << "Lower bound for " << target << ": "
+              << (idx >= 0 ? std::to_string(idx) : "not found") << std::endl;
+
+    idx = upper_bound(nums, target);
+    std::cout << "Upper bound for " << target << ": "
+              << (idx >= 0 ? std::to_string(idx) : "not found") << std::endl;
+    std::cout << std::endl;
 
     return 0;
 }
