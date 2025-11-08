@@ -21,8 +21,7 @@ int main() {
     std::cout << std::endl;
 
     /* Basic Search Algorithms: Linear Search */
-    auto nums_ls = nums;
-    int idx = linear_search(nums_ls, target);
+    int idx = linear_search(nums, target);
     std::cout << "Linear searching" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
@@ -35,28 +34,36 @@ int main() {
     std::cout << std::endl;
 
     /* Binary Search */
-    auto nums_bs = nums;
-    idx = binary_search(nums_bs, target);
+    idx = binary_search(nums, target);
     std::cout << "Binary searching" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
                            : " not found")
               << "\n\n";
 
-    /* Binary Search (using recursive calls) */
-    auto nums_bsr = nums;
-    idx = binary_search_recursive(nums_bsr, target, 0,
+    /* Binary Search (using recursive calls with custom bounds) */
+    idx = binary_search_recursive(nums, target, 0,
                                   static_cast<int>(nums.size()) - 1);
-    std::cout << "Recursive Binary searching" << std::endl;
+    std::cout << "Recursive Binary searching (custom bounds)" << std::endl;
     std::cout << "Target " << target
               << (idx >= 0 ? " found at index " + std::to_string(idx)
                            : " not found")
               << "\n\n";
 
+    /* Binary Search (using recursive wrapper - safer, uses default bounds) */
+    idx = binary_search_recursive(nums, target);
+    std::cout << "Recursive Binary searching (wrapper)" << std::endl;
+    std::cout << "Target " << target
+              << (idx >= 0 ? " found at index " + std::to_string(idx)
+                           : " not found")
+              << "\n\n";
+
+    /* Lower Bound */
     idx = lower_bound(nums, target);
     std::cout << "Lower bound for " << target << ": "
               << (idx >= 0 ? std::to_string(idx) : "not found") << std::endl;
 
+    /* Upper Bound */
     idx = upper_bound(nums, target);
     std::cout << "Upper bound for " << target << ": "
               << (idx >= 0 ? std::to_string(idx) : "not found") << std::endl;
