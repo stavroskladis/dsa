@@ -6,6 +6,10 @@ This directory contains implementations of various searching algorithms in C++. 
 
 1. [Basic Search Algorithms](#basic-search-algorithms)
 2. [Binary Search Variants](#binary-search-variants)
+3. [Standard Library Equivalents](#standard-library-equivalents)
+4. [Usage Examples](#usage-examples)
+5. [Complexity Comparison](#complexity-comparison)
+6. [Notes](#notes)
 
 ---
 
@@ -163,6 +167,90 @@ int main() {
     return 0;
 }
 ```
+
+## Standard Library Equivalents
+
+The C++ standard library (`<algorithm>`) provides equivalent functions with different return types. Here's a comparison:
+
+| Custom Function | Standard Library | Return Type | Notes |
+|----------------|------------------|-------------|-------|
+| `linear_search` | `std::find` | Index vs Iterator | `std::find` returns an iterator |
+| `binary_search` | `std::binary_search` | Index vs Bool | `std::binary_search` returns `bool` (found/not found), not the index |
+| `lower_bound` | `std::lower_bound` | Index vs Iterator | `std::lower_bound` returns an iterator |
+| `upper_bound` | `std::upper_bound` | Index vs Iterator | `std::upper_bound` returns an iterator |
+
+### Key Differences:
+
+1. **Return Types:**
+   - **Custom functions:** Return `int` index (-1 if not found)
+   - **Standard library:** Return iterators (or `bool` for `std::binary_search`)
+   - **Note:** To convert iterators to indices, use `std::distance(begin, iterator)`
+
+2. **Usage Example Comparison:**
+
+```cpp
+#include <algorithm>
+#include <vector>
+
+std::vector<int> arr = {1, 3, 5, 7, 9};
+
+// Custom function - direct index return
+int idx = linear_search(arr, 5);  // Returns 2
+
+// Standard library - iterator return
+auto it = std::find(arr.begin(), arr.end(), 5);
+if (it != arr.end()) {
+    int idx = std::distance(arr.begin(), it);  // Returns 2
+}
+
+// Custom function - direct index return
+int idx = binary_search(arr, 5);  // Returns 2
+
+// Standard library - bool return (no index)
+bool found = std::binary_search(arr.begin(), arr.end(), 5);  // Returns true
+// To get index, need to use std::lower_bound:
+auto it = std::lower_bound(arr.begin(), arr.end(), 5);
+if (it != arr.end() && *it == 5) {
+    int idx = std::distance(arr.begin(), it);  // Returns 2
+}
+```
+
+---
+
+## Complexity Comparison
+
+Complete complexity analysis for all implemented search algorithms:
+
+| Algorithm | Best Case | Average Case | Worst Case | Space Complexity |
+|-----------|-----------|--------------|------------|------------------|
+| `linear_search` | O(1) | O(n) | O(n) | O(1) |
+| `binary_search` | O(1) | O(log n) | O(log n) | O(1) |
+| `binary_search_recursive` (3-param) | O(1) | O(log n) | O(log n) | O(log n) |
+| `binary_search_recursive` (wrapper) | O(1) | O(log n) | O(log n) | O(log n) |
+| `lower_bound` | O(log n) | O(log n) | O(log n) | O(1) |
+| `upper_bound` | O(log n) | O(log n) | O(log n) | O(1) |
+
+### Notes on Complexity:
+
+1. **Best Case Scenarios:**
+   - `linear_search`: Target found at the first position
+   - `binary_search`: Target found at the middle position (first comparison)
+   - `lower_bound`/`upper_bound`: Always O(log n) - must verify first occurrence
+
+2. **Worst Case Scenarios:**
+   - `linear_search`: Target found at last position or not found
+   - `binary_search`: Target not found or found at leaf of search tree
+   - `lower_bound`/`upper_bound`: Must traverse full binary search tree
+
+3. **Space Complexity:**
+   - Iterative algorithms: O(1) - only use a few variables
+   - Recursive algorithms: O(log n) - recursion call stack depth equals tree height
+
+4. **Requirements:**
+   - Binary search variants require sorted arrays
+   - Linear search works on any array (sorted or unsorted)
+
+---
 
 ## Notes
 
