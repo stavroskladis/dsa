@@ -6,10 +6,16 @@ This directory contains implementations of various searching algorithms in C++. 
 
 1. [Basic Search Algorithms](#basic-search-algorithms)
 2. [Binary Search Variants](#binary-search-variants)
-3. [Standard Library Equivalents](#standard-library-equivalents)
-4. [Usage Examples](#usage-examples)
+3. [Usage Examples](#usage-examples)
+4. [Standard Library Equivalents](#standard-library-equivalents)
 5. [Complexity Comparison](#complexity-comparison)
 6. [Notes](#notes)
+7. [General Recommendations](#general-recommendations)
+   - [When to Use Linear Search](#when-to-use-linear-search-stdfind)
+   - [When to Use Binary Search Variants](#when-to-use-binary-search-variants)
+   - [Iterative vs Recursive Implementation](#iterative-vs-recursive-implementation)
+   - [Performance Trade-off Example](#performance-trade-off-example)
+   - [Understanding Amortized Complexity](#understanding-amortized-complexity)
 
 ---
 
