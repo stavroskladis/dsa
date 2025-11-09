@@ -3,6 +3,8 @@
 
 #include <vector>
 
+namespace searching {
+
 /**
  * Basic Search Algorithms
  */
@@ -182,5 +184,7 @@ int upper_bound(const std::vector<T>& A, T target) {
 
     return result; // Returns -1 if all elements are <= target
 }
+
+} // namespace searching
 
 #endif
