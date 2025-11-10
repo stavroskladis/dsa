@@ -51,21 +51,37 @@ class LinkedList {
         }
     }
 
-    // Add a new node to the front of the list
-    void add(const T& data) {
-        auto new_node = std::make_unique<Node<T>>(data);
-        new_node->next = std::move(head);
-        head = std::move(new_node);
-    }
-
     // Traverse the list and print all elements
     void print() const {
         const Node<T>* current = head.get();
+
         while (current) {
             std::cout << *current << " "; // Use operator<<
             current = current->next.get();
         }
         std::cout << std::endl;
+    }
+
+    int count() const {
+        const Node<T>* current = head.get();
+        int count = 0;
+
+        while (current) {
+            ++count;
+            current = current->next.get();
+        }
+
+        return count;
+    }
+
+    bool empty() const {
+        return head == nullptr;
+    }
+
+    void push_front(const T& data) {
+        auto new_node = std::make_unique<Node<T>>(data);
+        new_node->next = std::move(head);
+        head = std::move(new_node);
     }
 };
 
