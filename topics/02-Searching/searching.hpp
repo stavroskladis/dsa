@@ -1,5 +1,5 @@
-#ifndef SEARCHING_H
-#define SEARCHING_H
+#ifndef SEARCHING_HPP
+#define SEARCHING_HPP
 
 #include <vector>
 
@@ -80,8 +80,7 @@ int binary_search(const std::vector<T>& A, T target) {
  *  - Note: Not found or invalid indices will return -1.
  */
 template <typename T>
-int binary_search_recursive(const std::vector<T>& A, T target, int low,
-                            int high) {
+int binary_search_recursive(const std::vector<T>& A, T target, int low, int high) {
     int max_index = static_cast<int>(A.size()) - 1;
     if (A.empty() || high < low || low < 0 || high > max_index) {
         return -1;
@@ -117,8 +116,7 @@ int binary_search_recursive(const std::vector<T>& A, T target) {
     if (A.empty()) {
         return -1;
     }
-    return binary_search_recursive(A, target, 0,
-                                   static_cast<int>(A.size()) - 1);
+    return binary_search_recursive(A, target, 0, static_cast<int>(A.size()) - 1);
 }
 
 /**

@@ -1,5 +1,5 @@
-#ifndef SORTING_H
-#define SORTING_H
+#ifndef SORTING_HPP
+#define SORTING_HPP
 
 #include <algorithm>
 #include <concepts>
@@ -147,8 +147,7 @@ void insertion_sort(std::vector<T>& A) {
  */
 template <typename T, typename Compare>
     requires Comparable<T, Compare>
-void merge(std::vector<T>& A, int left, int m, int right,
-           Compare comp) {
+void merge(std::vector<T>& A, int left, int m, int right, Compare comp) {
     int n1 = m - left + 1; // Size of left subarray
     int n2 = right - m;    // Size of right subarray
 
@@ -204,8 +203,7 @@ void merge(std::vector<T>& A, int left, int m, int right) {
  */
 template <typename T, typename Compare>
     requires Comparable<T, Compare>
-void merge_sort(std::vector<T>& A, int left, int right,
-                Compare comp) {
+void merge_sort(std::vector<T>& A, int left, int right, Compare comp) {
     // Base case: array has 0 or 1 element
     if (left >= right) {
         return;
